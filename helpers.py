@@ -1,16 +1,12 @@
+def flatten(t):
+  return [item for sublist in t for item in sublist]
 
-def getMemoryUsage(assignments, start):
-  return sum(map(lambda x: x.job.mr, filter(lambda x: x.start >= start or x.complete < start, assignments)))
+def getMemoryUsage(assignments):
+  return sum(assignment.job.mr for assignment in assignments)
 
-def getCMAXForSpecificMachine(assignments, machine):
-  print(map(lambda x: x.complete, filter(lambda x: x.machine == machine, assignments)))
-  return max(map(lambda x: x.complete, filter(lambda x: x.machine == machine, assignments)))
+def getAssignmentsRunningNow(machines, current_machine_index):
+  complete_time = 0
+  if len(machines[current_machine_index]) > 0:
+    complete_time = machines[current_machine_index][-1].complete
 
-def getStartTimeForRequiredMemory(assignments, start, required_memory, total_memory):
-  assignments = list(filter(lambda x: x.start >= start or x.complete < start, assignments)).sort(key=lambda x: x.complete)
-  # ile pamieci zabieraja
-  # posortowane po complete
-  # diff total_memory - curent >= required_memory
-  # dodajemy do assignments
-  print(assignments)
-  # return min(map(lambda x: x.start, filter(lambda x: x.job.mr <= memory, assignments)))
+  return list(filter(lambda a: a.complete > complete_time, flatten(filter(lambda m: len(m) > 0, [m for m in machines]))))
