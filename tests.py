@@ -12,6 +12,8 @@ instance = Instance(machines=3)
 instance.jobs = [ja, jb, jc, jd, je]
 schedule = LMR(instance)
 print("LMR: ", schedule.cmax())
+print(schedule.assignments)
+print('\n')
 
 
 
@@ -27,7 +29,8 @@ instance = Instance(3)
 instance.jobs = [ja, jb, jc, jd, je, jf, jg]
 schedule = LMR(instance)
 print("LMR: ", schedule.cmax())
-
+print(schedule.assignments)
+print('\n')
 
 
 ja = Job("J1", p=10, mr=70254591)
@@ -43,3 +46,5 @@ instance.jobs = [ja, jb, jc, jd, je, jf, jg]
 
 schedule = LMR(instance)
 print("LMR: ", schedule.cmax())
+print(schedule.assignments)
+print('\n')

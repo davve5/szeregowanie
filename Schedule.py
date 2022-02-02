@@ -16,7 +16,7 @@ class Schedule:
         unique_keys = [job.i for job in self.instance.jobs]
         for assignment_key in [assignment.job.i for assignment in self.assignments]:
             if assignment_key not in unique_keys:
-                print('Sprawdzenie czy indetyfikator istnieje w jobs: {} {}'.format(assignment_key))
+                print('ERROR: Sprawdzenie czy indetyfikator istnieje w jobs: {} {}'.format(assignment_key))
                 return False
             
         # W danej chwili, na danym procesorze, wykonuje się co najwyżej jedno zadanie.
@@ -37,7 +37,7 @@ class Schedule:
                 for aa in machine:
                     if a.job != aa.job:
                         if max(a.start, aa.start) < min(a.complete, aa.complete):
-                            print('W danej chwili, na danym procesorze, wykonuje się co najwyżej jedno zadanie: {} {}'.format(a, aa))
+                            print('ERROR: W danej chwili, na danym procesorze, wykonuje się co najwyżej jedno zadanie: {} {}'.format(a, aa))
                             return False
                         
         # To samo zadanie nie wykonuje się jednocześnie na więcej niż jednym procesorze.
@@ -45,30 +45,49 @@ class Schedule:
             for aa in self.assignments:
                     if a.job == aa.job and a.machine != aa.machine:
                         if max(a.start, aa.start) < min(a.complete, aa.complete):
-                            print('To samo zadanie nie wykonuje się jednocześnie na więcej niż jednym procesorze: {} {}'.format(a, aa))
+                            print('ERROR: To samo zadanie nie wykonuje się jednocześnie na więcej niż jednym procesorze: {} {}'.format(a, aa))
                             return False
                         
-        # Każde zadanie zostało wykonane.
-        if sum(map(lambda x: x.job.p, self.assignments)) == sum(map(lambda x: x.complete - x.start, self.assignments)):
-            # print('Każde zadanie zostało wykonane')
-            return False
+        jobs = {}
+        for assignment in self.assignments:
+            key = assignment.job.i
+            if key in jobs:
+                jobs[key].append(assignment)
+            else:
+                jobs[key] = [assignment]
+        
+        values = []
+        for key in jobs:
+            values.append(jobs[key])
+        
+        for v in values:
+            worked_time = 0
+            for k in v:
+                worked_time += k.complete - k.start
+            if worked_time != v[0].job.p:
+                print('Każde zadanie zostało wykonane.: {}'.format(v[0].job.p))
+                return False
+        # # Każde zadanie zostało wykonane.
+        # if sum(map(lambda x: x.job.p, self.assignments)) == sum(map(lambda x: x.complete - x.start, self.assignments)):
+        #     print('ERROR: Każde zadanie zostało wykonane')
+        #     return False
         
         # Na procesorach wykonują się tylko te zadania, które zostały opisane w instancji problemu.
         if len(self.assignments) != len(self.instance.jobs):
-            print('Na procesorach wykonują się tylko te zadania, które zostały opisane w instancji problemu')
+            print('ERROR: Na procesorach wykonują się tylko te zadania, które zostały opisane w instancji problemu')
             return False
 
         assignment_keys = [assignment.job.i for assignment in self.assignments]
         job_keys = [jobs.i for jobs in self.instance.jobs]
         for job_key in job_keys:
             if not job_key in assignment_keys:
-                print('Na procesorach wykonują się tylko te zadania, które zostały opisane w instancji problemu')
+                print('ERROR: Na procesorach wykonują się tylko te zadania, które zostały opisane w instancji problemu')
                 return False
         
         # Żadne zadanie nie wykonuje się na niedostepnym procesorze
         for assignment in self.assignments:
             if assignment.machine < 1 or assignment.machine > self.instance.machines:
-                print('Żadne zadanie nie wykonuje się na niedostepnym procesorze')
+                print('ERROR: Żadne zadanie nie wykonuje się na niedostepnym procesorze')
                 return False
         
         return True
