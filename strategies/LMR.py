@@ -5,14 +5,11 @@ import helpers
 
 def getMachineIndexWithLowestCMAX(machines):
   current_index = 0
-  # print(machines)
   for index, machine in enumerate(machines):
     if len(machine) == 0:
       return index
-    else:
-      # print('current_machine {} | {} candidate\n'.format(machines[current_index][-1].complete, machine[-1].complete))
-      if machines[current_index][-1].complete > machine[-1].complete:
-        current_index = index
+    if machines[current_index][-1].complete > machine[-1].complete:
+      current_index = index
   return current_index
 
 def getStartTime(machines, machine_index):
@@ -66,9 +63,9 @@ def LMR(instance):
 
   for m in machines:
     schedule.assignments += m
-  print('\n')
-  print(countAssignments(machines))
-  print('Are all jobs assigned:', len(schedule.assignments) == len(schedule.instance.jobs))
-  print('jobs: {}, assignments: {}'.format(len(schedule.instance.jobs), len(schedule.assignments)))
+  # print('\n')
+  # print(countAssignments(machines))
+  # print('Are all jobs assigned:', len(schedule.assignments) == len(schedule.instance.jobs))
+  # print('jobs: {}, assignments: {}'.format(len(schedule.instance.jobs), len(schedule.assignments)))
   pass
   return schedule
