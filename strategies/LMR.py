@@ -65,7 +65,7 @@ def LMR(instance):
     schedule.assignments += m
   # print('\n')
   # print(countAssignments(machines))
-  # print('Are all jobs assigned:', len(schedule.assignments) == len(schedule.instance.jobs))
+  print('Are all jobs assigned:', len(schedule.assignments) == len(schedule.instance.jobs))
   # print('jobs: {}, assignments: {}'.format(len(schedule.instance.jobs), len(schedule.assignments)))
   pass
   return schedule
