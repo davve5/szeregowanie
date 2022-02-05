@@ -1,3 +1,4 @@
+from sklearn import preprocessing
 from Instance import Instance
 
 class Schedule:
@@ -98,6 +99,10 @@ class Schedule:
         self.isFeasible()
         return max(map(lambda x: x.complete, self.assignments))
         pass
+    
+    def normalize(self):
+        normalized_memory = []
+        
 
     # def csum(self):
     #     assert self.isFeasible() == True
