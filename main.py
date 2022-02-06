@@ -1,5 +1,3 @@
-# psst.subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', 'requirements.txt'])
-
 import pandas as pd
 from time import process_time
 from generator import generateInstances
@@ -17,7 +15,6 @@ df = df[(df['Memory requirement (KB per CPU)'] > 0) & (df['Memory requirement (K
 NUM_OF_INSTANCES = 15 # 30
 NUM_OF_MACHINES  = 16 # 3 # 16
 NUM_OF_SAMPLE    = 5000 # 5000
-# RANDOM_STATE     = 466454 # 12345
 
 instances = generateInstances(df, NUM_OF_INSTANCES, NUM_OF_MACHINES, NUM_OF_SAMPLE)
 
