@@ -95,14 +95,9 @@ class Schedule:
         pass
 
     def cmax(self):
-        # assert self.isFeasible() == True
-        self.isFeasible()
+        assert self.isFeasible() == True
         return max(map(lambda x: x.complete, self.assignments))
         pass
-    
-    def normalize(self):
-        normalized_memory = []
-        
 
     # def csum(self):
     #     assert self.isFeasible() == True

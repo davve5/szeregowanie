@@ -35,16 +35,27 @@ def LMR(instance):
       if assigned == False:
         for assignment_by_complete_time in sorted(assignments_running_now, key=lambda x: x.complete):
           available_memory += assignment_by_complete_time.job.mr
-          # print('available memory: {}, required memory: {}, can be assigned?: {}'.format(available_memory, job.mr, available_memory >= job.mr))
-          if available_memory >= job.mr:
-            # print('added')
-            start_time = assignment_by_complete_time.complete
-            machines[machine_index].append(JobAssignment(job, machine_index + 1, start_time, start_time + job.p))
+          is_assigned = False
+          for i in range(len(jobs)):
+            if available_memory >= jobs[i].mr:
+              job_index = i
+              start_time = assignment_by_complete_time.complete
+              machines[machine_index].append(JobAssignment(jobs[job_index], machine_index + 1, start_time, start_time + jobs[job_index].p))
+              is_assigned = True
+              break
+          if is_assigned == True:
             break
+          # available_memory += assignment_by_complete_time.job.mr
+          # # print('available memory: {}, required memory: {}, can be assigned?: {}'.format(available_memory, job.mr, available_memory >= job.mr))
+          # if available_memory >= job.mr:
+          #   # print('added')
+          #   start_time = assignment_by_complete_time.complete
+          #   machines[machine_index].append(JobAssignment(job, machine_index + 1, start_time, start_time + job.p))
+          #   break
     jobs.pop(job_index)
 
   for m in machines:
     schedule.assignments += m
-  print('Are all jobs assigned:', len(schedule.assignments) == len(schedule.instance.jobs))
+  # print('Are all jobs assigned:', len(schedule.assignments) == len(schedule.instance.jobs))
   pass
   return schedule
