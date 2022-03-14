@@ -1,12 +1,31 @@
 from copy import deepcopy
+import math
 from JobAssignment import JobAssignment
 from Schedule import Schedule
+
 import helpers
 
 def BETA(instance):
   instance = deepcopy(instance)
   schedule = Schedule(instance)
-  jobs = sorted(deepcopy(schedule.instance.jobs), key=lambda j: j.p / j.mr)
+  jobs = sorted(deepcopy(instance.jobs), key=lambda j: j.mr / schedule.memory, reverse=True)
+
+  a = []
+  while len(jobs) > 0:
+    maxes = math.floor(instance.percentage())
+    mins = instance.machines - maxes
+    pr = 0
+    for i in range(maxes):
+      if len(jobs) > i:
+        a.append(jobs[i])
+        pr += jobs[i].pr
+        jobs.pop(i)
+
+    for i in list(filter(lambda x: (1 - pr / mins) >= x.pr, jobs))[-mins:]:
+      jobs.remove(i)
+      a.append(i)
+
+  jobs = a
 
   machines = [[] for i in range(instance.machines)]
   while len(jobs) > 0:

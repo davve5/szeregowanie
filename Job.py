@@ -6,6 +6,7 @@ class Job:
         self.i = i # Identyfikator zadania (np. liczba lub ciąg znaków)
         self.p = p # Czas wykonywania zadania
         self.mr = mr # Memory
+        self.pr = mr / 140509184 # percange usage
     
     # Reprezentacja zadania
     def __repr__(self):

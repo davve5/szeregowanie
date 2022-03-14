@@ -25,6 +25,3 @@ def getStartTime(machines, machine_index):
   if len(machines[machine_index]) > 0:
     start_time = machines[machine_index][-1].complete
   return start_time
-
-def countAssignments(assignments):
-  return sum(len(m) for m in assignments)

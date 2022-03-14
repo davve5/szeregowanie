@@ -7,12 +7,8 @@ class Schedule:
         self.instance = i
         self.assignments = []
         self.memory = 140509184 # 134 GB
-
-    def isFeasible(self):
-        # current_memory_usage = sum(map(lambda x: x.job.mr, filter(lambda x: x.start >= start or x.complete < start, assignments)))
-        # if current_memory_usage > self.memory:
-        #     return False
         
+    def isFeasible(self):
         # Sprawdzenie czy indetyfikator istnieje w jobs
         unique_keys = [job.i for job in self.instance.jobs]
         for assignment_key in [assignment.job.i for assignment in self.assignments]:

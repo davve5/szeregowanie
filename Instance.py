@@ -10,6 +10,13 @@ class Instance:
   def generate(self, n, pmin=1, pmax=1):
     for i in range(1, n + 1):
       self.jobs.append(Job("J" + str(len(self.jobs) + 1), random.randint(pmin, pmax)))
+
+  def percentage(self):
+    count = 0
+    for job in self.jobs:
+      if self.normalize(job) > 0.5:
+        count += 1
+    return count / len(self.jobs) * 100
     
   def normalize(self, job):
     return job.mr / 140509184

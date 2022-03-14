@@ -6,7 +6,7 @@ import helpers
 def ALFA(instance):
   instance = deepcopy(instance)
   schedule = Schedule(instance)
-  jobs = sorted(deepcopy(schedule.instance.jobs), key=lambda j: j.p)
+  jobs = sorted(deepcopy(schedule.instance.jobs), key=lambda j: (j.mr / schedule.memory) * j.p , reverse=True)
 
   machines = [[] for i in range(instance.machines)]
   while len(jobs) > 0:
